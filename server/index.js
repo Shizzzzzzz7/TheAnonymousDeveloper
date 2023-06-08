@@ -5,6 +5,12 @@ const express= require("express");
 const app= express();
 
 
+//Middleware
+const middleware = (req,res,next)=>{
+    console.log("Middleware Accessed");
+    next();
+}
+
 
 //Routes
 app.get("/",(req,res)=>{
@@ -22,8 +28,8 @@ app.get("/signup",(req,res)=>{
     res.send("Welcome to SignUp Page");
 });
 
-app.get("/about",(req,res)=>{
-
+app.get("/about",middleware,(req,res)=>{
+    console.log("About Us Accessed");
     res.send("Welcome to About Page");
 });
 
