@@ -2,7 +2,7 @@ const express= require("express");
 
 const router= express.Router();
 
-//Middleware
+//Middleware Function
 const middleware = (req,res,next)=>{
     console.log("Middleware Accessed");
     next();
