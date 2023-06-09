@@ -1,9 +1,23 @@
 const express= require("express");
+const mongoose = require("mongoose");
 
 
 
 const app= express();
 
+const MONGODB_URL="mongodb+srv://shizzzzzzz7admin:adminisshirsha@cluster0.6q6eym5.mongodb.net/developers";
+
+
+const connection = async()=>{
+    try{
+        await mongoose.connect(MONGODB_URL);
+        console.log("Connected to the Database");
+    }catch(err){
+        console.log("Error Occured = ", err);
+    }
+}
+
+connection();
 
 //Middleware
 const middleware = (req,res,next)=>{
