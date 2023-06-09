@@ -1,6 +1,7 @@
 const express= require("express");
 const mongoose = require("mongoose");
 const dotenv= require("dotenv");
+const {connection} = require("./db/connection");
 
 
 
@@ -9,18 +10,7 @@ const app= express();
 //configuring .env file
 dotenv.config({path: "./.env"});
 
-const MONGODB_URL="mongodb+srv://shizzzzzzz7admin:adminisshirsha@cluster0.6q6eym5.mongodb.net/developers";
-
-
-const connection = async()=>{
-    try{
-        await mongoose.connect(MONGODB_URL);
-        console.log("Connected to the Database");
-    }catch(err){
-        console.log("Error Occured = ", err);
-    }
-}
-
+//Establishing Connection to Database
 connection();
 
 //Middleware
