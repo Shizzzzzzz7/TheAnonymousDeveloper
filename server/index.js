@@ -10,6 +10,9 @@ const app= express();
 //configuring .env file
 dotenv.config({path: "./.env"});
 
+//PORT for server
+const PORT = process.env.PORT;
+
 //Establishing Connection to Database
 connection();
 
@@ -49,6 +52,6 @@ app.get("/contact",(req,res)=>{
 
 
 //Listning to PORT
-app.listen(5010, ()=>{
-    console.log("Server Running on PORT 5010");
+app.listen(PORT, ()=>{
+    console.log(`Server Running on PORT ${PORT}`);
 });
