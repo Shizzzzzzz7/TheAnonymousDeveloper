@@ -1,6 +1,7 @@
 const mongoose= require("mongoose");
 
-
+//This defines the structure of the documents in DB (documents=File/Info representing a 
+//a particular User)
 const developerSchema= new mongoose.Schema({
     name:{
         type: String,
@@ -29,7 +30,7 @@ cpassword:{
 
 });
 
-
+//This makes the collection of DB
 const Developer= mongoose.model("Developer", developerSchema);
 
 module.exports= Developer;

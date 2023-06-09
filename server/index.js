@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv= require("dotenv");
 const {connection} = require("./db/connection");
 const Developer = require("./models/developerSchema");
+const router= require("./router/authRoute");
 
 
 
@@ -14,42 +15,12 @@ dotenv.config({path: "./.env"});
 //PORT for server
 const PORT = process.env.PORT;
 
+//Middleware
+app.use(express.json());
+app.use(router);
+
 //Establishing Connection to Database
 connection();
-
-//Middleware
-const middleware = (req,res,next)=>{
-    console.log("Middleware Accessed");
-    next();
-}
-
-
-//Routes
-app.get("/",(req,res)=>{
-
-    res.send("Welcome to Home Page");
-});
-
-app.get("/login",(req,res)=>{
-
-    res.send("Welcome to LogIn Page");
-});
-
-app.get("/signup",(req,res)=>{
-
-    res.send("Welcome to SignUp Page");
-});
-
-app.get("/about",middleware,(req,res)=>{
-    console.log("About Us Accessed");
-    res.send("Welcome to About Page");
-});
-
-app.get("/contact",(req,res)=>{
-
-    res.send("Welcome to Contact Page");
-});
-
 
 
 //Listning to PORT
