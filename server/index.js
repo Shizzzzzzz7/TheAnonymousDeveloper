@@ -2,6 +2,7 @@ const express= require("express");
 const mongoose = require("mongoose");
 const dotenv= require("dotenv");
 const {connection} = require("./db/connection");
+const Developer = require("./models/developerSchema");
 
 
 
