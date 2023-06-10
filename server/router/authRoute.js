@@ -26,21 +26,22 @@ router.post("/signup",async (req,res)=>{
         const {name, phone, email,work, password, cpassword}= req.body;
 
         if(!name || !phone || !email || !work || !password|| !cpassword)
-        return res.status().json({error: "Please fill all the fields"});
+        return res.status(422).json({error: "Please fill all the fields"});
 
         const userExist= await Developer.findOne({email});
         
         if(userExist)
-        return res.json({message: "User Already Exist"});
+        return res.status(422).json({message: "User Already Exist"});
 
         const newDev= new Developer({name, phone, email,work, password, cpassword});
 
         await newDev.save();
 
-        res.json({message:"User Successfully Registered"});
+        res.status(200).json({message:"User Successfully Registered"});
 
     }catch(err){
             console.log(err);
+            res.status(500).json({error:"Error Occured"});
     }
     
 });
