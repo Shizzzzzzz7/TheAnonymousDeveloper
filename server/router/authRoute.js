@@ -15,9 +15,31 @@ router.get("/",(req,res)=>{
     res.send("Welcome to Home Page");
 });
 
-router.get("/login",(req,res)=>{
+router.post("/login",async(req,res)=>{
+    try {
 
-    res.send("Welcome to LogIn Page");
+        const {email, password}= req.body;
+
+        if(!email || !password)
+        return res.status(422).json({error: "Please fill all the fields"});
+
+        const userExist= await Developer.findOne({email});
+
+        if(!userExist)
+        return res.status(404).json({message: "Invalid Credentials"});
+
+        if(password!=userExist.password)
+        return res.status(400).json({message: "Invalid Credentials"});
+        else
+        return res.status(200).json({message: "Welcome"});
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error:error});
+        
+    }
+    
 });
 
 router.post("/signup",async (req,res)=>{
