@@ -15,12 +15,15 @@ dotenv.config({path: "./.env"});
 //PORT for server
 const PORT = process.env.PORT;
 
+//Establishing Connection to Database (Since NodeJS goes from top to bottom so first
+//making connection with database is done)
+connection();
+
 //Middleware
 app.use(express.json());
 app.use(router);
 
-//Establishing Connection to Database
-connection();
+
 
 
 //Listning to PORT
