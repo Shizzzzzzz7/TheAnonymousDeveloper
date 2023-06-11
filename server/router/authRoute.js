@@ -1,5 +1,6 @@
 const express= require("express");
 const Developer= require("../models/developerSchema");
+const bcrypt= require("bcrypt");
 
 const router= express.Router();
 
@@ -56,7 +57,13 @@ router.post("/signup",async (req,res)=>{
         if(userExist)
         return res.status(422).json({message: "User Already Exist"});
 
-        const newDev= new Developer({name, phone, email,work, password, cpassword});
+        if(password!=cpassword)
+        return res.status(422).json({message:"Password & Confirm Password doesn't match"});
+
+        const hashedPassword= await bcrypt.hash(password,10);
+        const cnfpassword=hashedPassword;
+
+        const newDev= new Developer({name, phone, email,work, password: hashedPassword, cpassword: cnfpassword});
 
         await newDev.save();
 
