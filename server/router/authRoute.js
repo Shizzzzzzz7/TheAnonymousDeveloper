@@ -24,6 +24,7 @@ router.post("/login",async(req,res)=>{
         return res.status(422).json({error: "Please fill all the fields"});
 
         const userExist= await Developer.findOne({email});
+        
 
         if(!userExist)
         return res.status(404).json({message: "Invalid Credentials"});
