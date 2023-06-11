@@ -30,7 +30,9 @@ router.post("/login",async(req,res)=>{
         if(!userExist)
         return res.status(404).json({message: "Invalid Credentials"});
 
-        if(password!=userExist.password)
+        const isMatched= await bcrypt.compare(password, userExist.password);
+
+        if(!isMatched)
         return res.status(400).json({message: "Invalid Credentials"});
         else
         return res.status(200).json({message: "Welcome"});
@@ -38,7 +40,7 @@ router.post("/login",async(req,res)=>{
         
     } catch (error) {
         console.log(error);
-        res.status(500).json({error:error});
+        res.status(500).json({error});
         
     }
     
