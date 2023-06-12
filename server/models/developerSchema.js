@@ -26,7 +26,17 @@ password:{
 cpassword:{
     type:String,
     required: true
-}
+},
+tokens:[
+
+    {
+        token:{
+            type:String
+        }
+    }
+]
+    
+
 
 });
 
