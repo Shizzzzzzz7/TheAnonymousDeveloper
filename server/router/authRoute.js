@@ -32,16 +32,24 @@ router.post("/login",async(req,res)=>{
         return res.status(404).json({message: "Invalid Credentials"});
 
         const isMatched= await bcrypt.compare(password, userExist.password);
-        const token= await jwt.sign({_id:userExist._id}, process.env.SECRET_KEY);
-
-        console.log(token);
-        userExist.tokens={token:token};
-        await userExist.save();
 
         if(!isMatched)
         return res.status(400).json({message: "Invalid Credentials"});
-        else
+        else{
+            //Generating JWT Token
+        const token= await jwt.sign({_id:userExist._id}, process.env.SECRET_KEY);
+
+        console.log(token);
+        //Adding JWT Token into Users DATABASE
+        userExist.tokens={token:token};
+        await userExist.save();
+        res.cookie("jwttoken", token,{
+            expires: new Date(Date.now()+100000),
+            httpOnly: true
+        });
         return res.status(200).json({message: "Welcome"});
+        }
+        
 
         
     } catch (error) {
