@@ -5,6 +5,7 @@ import About from "./components/About";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import ContactUs from "./components/ContactUs";
+import NotFound from "./components/404Page";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/contact" element={<ContactUs/>}/>
       <Route path="/signin" element={<SignIn/>}/>
       <Route path="/signup" element={<SignUp/>}/>
+      <Route path="*" element={<NotFound/>}/>
     </Routes>
     </>
   );
