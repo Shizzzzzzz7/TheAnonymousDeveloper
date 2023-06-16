@@ -1,5 +1,6 @@
 const express= require("express");
 const mongoose = require("mongoose");
+const cors= require("cors");
 const dotenv= require("dotenv");
 const {connection} = require("./db/connection");
 const Developer = require("./models/developerSchema");
@@ -21,6 +22,7 @@ const PORT = process.env.PORT;
 connection();
 
 //Middleware
+app.use(cors());
 app.use(express.json());
 app.use(router);
 
