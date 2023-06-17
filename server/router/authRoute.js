@@ -44,8 +44,8 @@ router.post("/login",async(req,res)=>{
         userExist.tokens={token:token};
         await userExist.save();
         res.cookie("jwttoken", token,{
-            expires: new Date(Date.now()+100000),
-            httpOnly: true
+            expires: new Date(new Date().getTime() + 10 * 1000),
+            httpOnly: false
         });
         return res.status(200).json({message: "Welcome"});
         }
