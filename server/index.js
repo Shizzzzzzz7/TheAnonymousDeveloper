@@ -1,6 +1,7 @@
 const express= require("express");
 const mongoose = require("mongoose");
 const cors= require("cors");
+const cookieParser= require("cookie-parser");
 const dotenv= require("dotenv");
 const {connection} = require("./db/connection");
 const Developer = require("./models/developerSchema");
@@ -22,7 +23,10 @@ const PORT = process.env.PORT;
 connection();
 
 //Middleware
+//cors By configuring CORS with these options, your application will allow cross-origin requests from http://localhost:3000 and include credentials in those requests. This is useful when you want to make API calls or access resources from a different domain while developing locally.
+//If not done then it wont be able to send cookies to frontend
 app.use(cors({origin:"http://localhost:3000", credentials:true}));
+app.use(cookieParser());
 app.use(express.json());
 app.use(router);
 

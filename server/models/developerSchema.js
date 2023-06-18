@@ -27,14 +27,10 @@ cpassword:{
     type:String,
     required: true
 },
-tokens:[
+token:{
 
-    {
-        token:{
-            type:String
-        }
-    }
-]
+    type:String
+}
     
 
 

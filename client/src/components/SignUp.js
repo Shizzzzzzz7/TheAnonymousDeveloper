@@ -1,8 +1,9 @@
 import { useState } from "react";
-import {redirect} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SignUp(){
 
+   const navigate=useNavigate();
 
 //This state is used to store the signup details of the user
     const [devDet, setDet]= useState({
@@ -27,6 +28,7 @@ function SignUp(){
 
     //This function is used to send the form data to the backend server
     async function handleForm(e){
+        try{
         e.preventDefault();
         
         
@@ -35,10 +37,21 @@ function SignUp(){
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(devDet)
         });
-        console.log(response);
-        if(response.status === 200){
-            redirect("/signin");
+        const data=await response.json();
+        console.log(data);
+        if(response.status === 500){
+            console.log(data.error);
+            return ;
+        }else if(response.status !== 200){
+            console.log(data.message);
+            return ;
         }
+
+        navigate("/signin");
+
+    }catch(err){
+        console.log(err);
+    }
     }
 
     return(
@@ -52,6 +65,8 @@ function SignUp(){
                 <input type="password" name="cpassword" autoComplete="off" value={devDet.cpassword} placeholder="Confirm Your Password" onChange={getFormData}/><br />
                 <input type="submit" name="submit" />
             </form>
+
+            
         </>
     );
 }

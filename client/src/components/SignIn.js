@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function SignIn(){
+    const navigate= useNavigate();
     const[email,setEmail]=useState('');
     const[password,setPassword]=useState('');
 
@@ -9,7 +11,7 @@ async function formHandle(e){
 
     const response= await fetch("http://localhost:5010/login",{
         method:"POST",
-        credentials: "include",
+        credentials: "include", //This will include all the credentials that the backend sends eg:cookies etc
         headers:{
             "Content-Type":"application/json"
         },
@@ -18,10 +20,11 @@ async function formHandle(e){
             password
         })
     });
-
-    console.log(response);
+    const data= await response.json();
+    console.log(data.message);
     if(response.status === 200){
-        console.log("DOne");
+        console.log("Done");
+        navigate("/");
     }
 }
 

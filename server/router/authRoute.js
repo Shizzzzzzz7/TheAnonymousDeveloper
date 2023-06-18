@@ -1,15 +1,13 @@
 const express= require("express");
 const Developer= require("../models/developerSchema");
 const bcrypt= require("bcrypt");
+const cookieParser= require("cookie-parser");
 const jwt= require("jsonwebtoken");
+const {authenticate} = require("../middleware/authenticate");
 
 const router= express.Router();
 
-//Middleware Function
-const middleware = (req,res,next)=>{
-    console.log("Middleware Accessed");
-    next();
-}
+router.use(cookieParser());
 
 //Routes
 router.get("/",(req,res)=>{
@@ -23,7 +21,7 @@ router.post("/login",async(req,res)=>{
         const {email, password}= req.body;
 
         if(!email || !password)
-        return res.status(422).json({error: "Please fill all the fields"});
+        return res.status(422).json({message: "Please fill all the fields"});
 
         const userExist= await Developer.findOne({email});
         
@@ -39,15 +37,14 @@ router.post("/login",async(req,res)=>{
             //Generating JWT Token
         const token= await jwt.sign({_id:userExist._id}, process.env.SECRET_KEY);
 
-        console.log(token);
+        // console.log(token);
         //Adding JWT Token into Users DATABASE
-        userExist.tokens={token:token};
+        userExist.token=token;
         await userExist.save();
         res.cookie("jwttoken", token,{
-            expires: new Date(new Date().getTime() + 10 * 1000),
-            httpOnly: false
-        });
-        return res.status(200).json({message: "Welcome"});
+            expires: new Date(new Date().getTime() + 10 * 100000),
+            httpOnly: true
+        }).status(200).json({message: "Welcome"});
         }
         
 
@@ -66,7 +63,7 @@ router.post("/signup",async (req,res)=>{
         const {name, phone, email,work, password, cpassword}= req.body;
 
         if(!name || !phone || !email || !work || !password|| !cpassword)
-        return res.status(422).json({error: "Please fill all the fields"});
+        return res.status(422).json({message: "Please fill all the fields"});
 
         const userExist= await Developer.findOne({email});
         
@@ -92,9 +89,9 @@ router.post("/signup",async (req,res)=>{
     
 });
 
-router.get("/about",middleware,(req,res)=>{
-    console.log("About Us Accessed");
-    res.send("Welcome to About Page");
+router.get("/about",authenticate,(req,res)=>{
+    // console.log("About Us Accessed");
+    res.send(req.rootUser);
 });
 
 router.get("/contact",(req,res)=>{
