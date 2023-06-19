@@ -94,9 +94,9 @@ router.get("/about",authenticate,(req,res)=>{
     res.send(req.rootUser);
 });
 
-router.get("/contact",(req,res)=>{
+router.get("/contact",authenticate,(req,res)=>{
 
-    res.send("Welcome to Contact Page");
+    res.send(req.rootUser);
 });
 
 module.exports= router;
