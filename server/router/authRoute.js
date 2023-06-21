@@ -99,4 +99,8 @@ router.get("/contact",authenticate,(req,res)=>{
     res.send(req.rootUser);
 });
 
+router.get("/logout", (req,res)=>{
+    res.clearCookie("jwttoken").status(200).send("User Logout");
+});
+
 module.exports= router;

@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import ContactUs from "./components/ContactUs";
 import NotFound from "./components/404Page";
+import Logout from "./components/Logout";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/contact" element={<ContactUs/>}/>
       <Route path="/signin" element={<SignIn/>}/>
       <Route path="/signup" element={<SignUp/>}/>
+      <Route path="/logout" element={<Logout/>}/>
       <Route path="*" element={<NotFound/>}/>
     </Routes>
     </>
